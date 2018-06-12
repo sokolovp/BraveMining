@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/withdraw.js"></script>
+    <script src="js/deposit.js"></script>
+
+    <!-- Cascading Style Sheets -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/custom.css" rel="stylesheet" media="screen">
+    <link href="css/inject.css" rel="stylesheet" media="screen">
+
+</head>
+<body>
+    <div class="container">
+        <div id="wallet-popup">
+            <div class="align-center wallet-popup__header">
+                <h1 class="wallet-popup__title">Wallet</h1>
+                <div class="wallet-popup_address">e9873326647628cff676871632fdf7812</div>
+            </div>
+            <div class="params-group container">
+                <div class="flex space-between wallet-info">
+                    <span class="wallet-params">Pending Balance:</span>
+                    <span class="wallet-value" id="xmr-value"></span>
+                </div>
+                <div class="flex space-between wallet-info">
+                <span class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>XMR / </span><span id="currency"></span>
+                    </button>
+                    <span class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dropdown-menu">
+                        <button class="dropdown-item btn btn-link" type="button">GBP</button>
+                        <button class="dropdown-item btn btn-link" type="button">USD</button>
+                        <button class="dropdown-item btn btn-link" type="button">EUR</button>
+                    </span>
+                </span>
+                    <span class="wallet-value" id="conversion-value"></span>
+                </div>
+            </div>
+
+            <div class="button-group align-center flex space-around">
+                <button class="btn btn-primary wallet-buttons" id="open-withdraw">Withdraw</button>
+                <button class="btn btn-primary wallet-buttons" id="open-deposit">Deposit</button>
+            </div>
+        </div>
+
+        <div id="deposit-popup" class="align-center">
+            <div class="flex-center flex deposit-popup__header">
+                <h1 class="deposit-title">Deposit funds</h1>
+                <img src="img/close-icon.png" class="close-icon" id="close-deposit-icon">
+            </div>
+            <div class="flex-center withdraw-wallet-address flex">
+                <label for="withdraw-wallet-address">Wallet address</label>
+                <div>
+                    <input type="text" id="deposit-wallet-address" placeholder="Enter a wallet address" />
+                </div>
+                <div class="qr-code-btn">
+                    <img src="img/file-icon.png">
+                </div>
+            </div>
+
+            <img src="img/qrcode.png" class="qr-code">
+            <div style="color: #169bd5; cursor: pointer; text-decoration: underline">Show all addresses</div>
+
+            <div class="flex-center withdraw-wallet-address password flex">
+                <label for="withdraw-password">Password</label>
+                <div>
+                    <input type="text" id="deposit-password" placeholder="Enter a password" />
+                </div>
+            </div>
+
+            <div class="align-center" style="margin-top: 30px;">
+                <button class="btn btn-primary wallet-buttons" id="deposit">Deposit</button>
+            </div>
+        </div>
+
+        <div id="withdraw-popup" class="align-center">
+            <div class="flex-center flex withdraw-popup__header">
+                <h1 class="withdraw-title">Withdraw funds</h1>
+                <img src="img/close-icon.png" class="close-icon" id="close-withdraw-icon">
+            </div>
+            <div class="flex-center withdraw-wallet-address flex">
+                <label for="withdraw-wallet-address">To</label>
+                <div>
+                    <input type="text" id="withdraw-wallet-address" placeholder="Enter a wallet address" />
+                </div>
+                <div class="qr-code-btn">
+                    <img src="img/qrcode.png">
+                </div>
+            </div>
+            <div class="flex-center withdraw-wallet-address password flex">
+                <label for="withdraw-password">Password</label>
+                <div>
+                    <input type="text" id="withdraw-password" placeholder="Enter a password" />
+                </div>
+            </div>
+
+            <div class="align-center" style="margin-top: 30px;">
+                <button class="btn btn-primary wallet-buttons" id="withdraw">Withdraw</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

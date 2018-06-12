@@ -1,0 +1,13 @@
+diff --git a/chrome/app/BUILD.gn b/chrome/app/BUILD.gn
+index b431e6968c2193c01fdfdfd8014ef54a1fc40872..83f9f2bf531f10d3db98e800d490ebe0165c46a0 100644
+--- a/chrome/app/BUILD.gn
++++ b/chrome/app/BUILD.gn
+@@ -247,7 +247,7 @@ grit("google_chrome_strings") {
+ }
+ 
+ grit("chromium_strings") {
+-  source = "chromium_strings.grd"
++  source = "${branding_path_component}_strings.grd"
+   defines = chrome_grit_defines
+   output_dir = "$root_gen_dir/chrome"
+   outputs = [

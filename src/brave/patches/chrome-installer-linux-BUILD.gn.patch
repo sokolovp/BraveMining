@@ -1,0 +1,38 @@
+diff --git a/chrome/installer/linux/BUILD.gn b/chrome/installer/linux/BUILD.gn
+index 2ea8f903186301e30e8b22562528503a592856f7..0127e734003fd36be765e8f5222bdf2db149b329 100644
+--- a/chrome/installer/linux/BUILD.gn
++++ b/chrome/installer/linux/BUILD.gn
+@@ -25,11 +25,10 @@ declare_args() {
+ assert(is_linux)
+ 
+ packaging_files_executables = [
+-  "$root_out_dir/chrome",
+-  "$root_out_dir/chrome_sandbox",
++  "$root_out_dir/brave",
++  "$root_out_dir/brave_sandbox",
+ ]
+ packaging_files_shlibs = []
+-
+ if (enable_nacl) {
+   packaging_files_executables += [
+     "$root_out_dir/nacl_helper",
+@@ -161,7 +160,7 @@ action("merge_rpm_dependencies") {
+ }
+ 
+ action("strip_chrome_binary") {
+-  prog_name = "$root_out_dir/chrome"
++  prog_name = "$root_out_dir/brave"
+   debug_file = prog_name + ".debug"
+   stripped_file = prog_name + ".stripped"
+   deps = [
+@@ -248,8 +247,8 @@ copy("common_packaging_files") {
+     ]
+   } else {
+     sources += [
+-      "common/chromium-browser/chromium-browser.appdata.xml",
+-      "common/chromium-browser/chromium-browser.info",
++      "//brave/chromium_src/chrome/installer/linux/common/brave-browser/chromium-browser.appdata.xml",
++      "//brave/chromium_src/chrome/installer/linux/common/brave-browser/chromium-browser.info",
+     ]
+   }
+ 

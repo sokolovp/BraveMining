@@ -1,0 +1,13 @@
+diff --git a/chrome/installer/util/browser_distribution.cc b/chrome/installer/util/browser_distribution.cc
+index 33c105c968dc46b62ab39ee766f1ecce4449c358..e6ad55977dc9dc61975f2a95d12e508f0d1bb7ab 100644
+--- a/chrome/installer/util/browser_distribution.cc
++++ b/chrome/installer/util/browser_distribution.cc
+@@ -108,7 +108,7 @@ base::string16 BrowserDistribution::GetStartMenuShortcutSubfolder(
+ }
+ 
+ base::string16 BrowserDistribution::GetPublisherName() {
+-  return L"Chromium";
++  return L"Brave";
+ }
+ 
+ base::string16 BrowserDistribution::GetAppDescription() {

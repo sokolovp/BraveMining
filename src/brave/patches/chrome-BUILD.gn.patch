@@ -1,0 +1,173 @@
+diff --git a/chrome/BUILD.gn b/chrome/BUILD.gn
+index fbcf20cd0411d39a99642acf2674bf7de2804608..0de616c33d867fae4b2760d55360b7f8f55aac9f 100644
+--- a/chrome/BUILD.gn
++++ b/chrome/BUILD.gn
+@@ -182,6 +182,15 @@ if (!is_android && !is_mac) {
+           "common/crash_keys.h",
+         ]
+ 
++        if (brave_chromium_build) {
++          sources -= [
++            "app/chrome_exe.rc",
++          ]
++          sources += [
++            "//brave/app/brave_exe.rc",
++          ]
++        }
++
+         deps += [
+           ":chrome_dll",
+           ":chrome_exe_version",
+@@ -244,6 +253,8 @@ if (!is_android && !is_mac) {
+           "app/chrome_main.cc",
+           "app/chrome_main_delegate.cc",
+           "app/chrome_main_delegate.h",
++          "//brave/app/brave_main_delegate.cc",
++          "//brave/app/brave_main_delegate.h",
+         ]
+ 
+         deps += [
+@@ -321,7 +332,7 @@ if (!is_android && !is_mac) {
+     if (is_win) {
+       output_name = "initialexe/chrome"
+     } else {
+-      output_name = "chrome"
++      output_name = "brave"
+     }
+ 
+     sources = []
+@@ -370,6 +381,8 @@ if (is_win) {
+       "app/chrome_main.cc",
+       "app/chrome_main_delegate.cc",
+       "app/chrome_main_delegate.h",
++      "//brave/app/brave_main_delegate.cc",
++      "//brave/app/brave_main_delegate.h",
+     ]
+ 
+     output_name = "chrome"
+@@ -477,6 +490,8 @@ if (is_win) {
+         "app/chrome_main.cc",
+         "app/chrome_main_delegate.cc",
+         "app/chrome_main_delegate.h",
++        "//brave/app/brave_main_delegate.cc",
++        "//brave/app/brave_main_delegate.h",
+       ]
+ 
+       configs += [ "//build/config/compiler:wexit_time_destructors" ]
+@@ -546,7 +561,9 @@ if (is_win) {
+ } else if (is_mac) {
+   chrome_helper_name = chrome_product_full_name + " Helper"
+   chrome_framework_name = chrome_product_full_name + " Framework"
+-  chrome_framework_version = "A"
++  # TODO(bridiver) - not sure why this has to be commented out, but otherwise
++  # it puts the framework in the wrong place for chrome_exe_main_mac.cc
++  # chrome_framework_version = "A"
+ 
+   group("chrome") {
+     deps = [
+@@ -595,6 +612,12 @@ if (is_win) {
+       "--scm=1",
+       "--bundle_id=$chrome_mac_bundle_id",
+     ]
++
++    if (brave_chromium_build) {
++      args += [
++        "--brave_channel=" + brave_channel,
++      ]
++    }
+   }
+ 
+   mac_app_bundle("chrome_app") {
+@@ -663,7 +686,7 @@ if (is_win) {
+     args =
+         [
+           "-b",
+-          "${branding_path_component}_strings",
++          _strings_file,
+           "-v",
+           rebase_path(chrome_version_file, root_build_dir),
+           "-g",
+@@ -712,6 +735,23 @@ if (is_win) {
+       "app/theme/$branding_path_component/mac/document.icns",
+       "browser/ui/cocoa/applescript/scripting.sdef",
+     ]
++
++    if (brave_chromium_build) {
++      sources -= [
++        "app/theme/$branding_path_component/mac/app.icns",
++      ]
++
++      if (is_official_build) {
++        sources += [
++          "app/theme/$branding_path_component/mac/$brave_channel/app.icns",
++        ]
++      } else {
++        sources += [
++          "app/theme/$branding_path_component/mac/development/app.icns",
++        ]
++      }
++    }
++
+     outputs = [
+       "{{bundle_resources_dir}}/{{source_file_part}}",
+     ]
+@@ -1207,6 +1247,8 @@ if (is_win) {
+       "app/chrome_main.cc",
+       "app/chrome_main_delegate.cc",
+       "app/chrome_main_delegate.h",
++      "//brave/app/brave_main_delegate.cc",
++      "//brave/app/brave_main_delegate.h",
+       "app/chrome_main_mac.h",
+       "app/chrome_main_mac.mm",
+     ]
+@@ -1271,6 +1313,7 @@ if (is_win) {
+ 
+     public_deps = [
+       ":chrome_dll",
++      "//brave/vendor/brave-extension:copy-extension-localization",
+     ]
+ 
+     deps = [
+@@ -1446,6 +1489,7 @@ if (is_win) {
+ 
+ group("browser_dependencies") {
+   public_deps = [
++    "//brave:browser_dependencies",
+     "//chrome/browser",
+     "//chrome/common",
+     "//components/sync",
+@@ -1482,6 +1526,7 @@ group("browser_dependencies") {
+ 
+ group("child_dependencies") {
+   public_deps = [
++    "//brave:child_dependencies",
+     "//chrome/browser/devtools",
+     "//chrome/child",
+     "//chrome/common",
+@@ -1503,7 +1548,7 @@ group("child_dependencies") {
+ if (is_win) {
+   process_version_rc_template("chrome_exe_version") {
+     sources = [
+-      "app/chrome_exe.ver",
++      "//brave/app/brave_exe.ver",
+     ]
+     output = "$target_gen_dir/chrome_exe_version.rc"
+   }
+@@ -1798,6 +1843,8 @@ if (is_android) {
+       "app/android/chrome_main_delegate_android.h",
+       "app/chrome_main_delegate.cc",
+       "app/chrome_main_delegate.h",
++      "//brave/app/brave_main_delegate.cc",
++      "//brave/app/brave_main_delegate.h",
+     ]
+ 
+     include_dirs = [ android_ndk_include_dir ]
+@@ -1853,7 +1900,7 @@ if (is_linux) {
+       dump_syms_binary =
+           get_label_info(dump_syms_label, "root_out_dir") + "/" + "dump_syms"
+ 
+-      chrome_binary = "$root_out_dir/chrome"
++      chrome_binary = "$root_out_dir/brave"
+       if (current_cpu == "x86") {
+         # GYP used "ia32" so keep that naming for back-compat.
+         symbol_file = "$root_out_dir/chrome.breakpad.ia32"

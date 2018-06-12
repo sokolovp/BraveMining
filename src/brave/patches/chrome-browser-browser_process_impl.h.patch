@@ -1,0 +1,12 @@
+diff --git a/chrome/browser/browser_process_impl.h b/chrome/browser/browser_process_impl.h
+index 74d521cd96e5e788018e5a07a482f1f0829d8e4c..0258d6157d511228a6e6c1eed5b11f55d0516322 100644
+--- a/chrome/browser/browser_process_impl.h
++++ b/chrome/browser/browser_process_impl.h
+@@ -166,6 +166,7 @@ class BrowserProcessImpl : public BrowserProcess,
+   static void RegisterPrefs(PrefRegistrySimple* registry);
+ 
+  private:
++  friend class BraveBrowserProcessImpl;
+   // KeepAliveStateObserver implementation
+   void OnKeepAliveStateChanged(bool is_keeping_alive) override;
+   void OnKeepAliveRestartStateChanged(bool can_restart) override;

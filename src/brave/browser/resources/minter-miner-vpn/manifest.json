@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "VPN",
+  "manifest_version": 2,
+  "description": "__MSG_appName__",
+  "browser_action": {
+    "default_title": "VPNs",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/vpn-icon.png",
+    "48": "img/vpn-icon.png",
+    "128": "img/vpn-icon.png"
+  },
+  "web_accessible_resources": [
+  ],
+  "background": {
+    "page": "popup.html"
+  },
+  "permissions": [ "contentSettings", "management", "tabs", "storage", "webNavigation" ],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;",
+    "key":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPaJHie12YPiuVr7PcksNDbqGjTSgwxAouc+Ol0NCIHixB5vfiU9LaQCY54TEQ+7M4+MejuOzMzlqT/WOqkUrFUFWGyYB0BstwUoXwlG7D/KAPPwVruZuiHr6MG7T0ABlC8zfq1bHwHp75d9D26ZRba8nUKAGyOOWRA0wVG4PeBQIDAQAB"
+}

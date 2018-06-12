@@ -1,0 +1,46 @@
+diff --git a/chrome/browser/extensions/extension_service.cc b/chrome/browser/extensions/extension_service.cc
+index f9685654537053f216768fef87a6533c29f174c6..f437e39cdfe3f2126809a4260131e7f2de05bd2b 100644
+--- a/chrome/browser/extensions/extension_service.cc
++++ b/chrome/browser/extensions/extension_service.cc
+@@ -28,6 +28,8 @@
+ #include "base/threading/thread_task_runner_handle.h"
+ #include "base/time/time.h"
+ #include "base/trace_event/trace_event.h"
++#include "brave/browser/extensions/brave_component_loader.h"
++#include "brave/extensions/browser/brave_extension_prefs.h"
+ #include "build/build_config.h"
+ #include "chrome/browser/browser_process.h"
+ #include "chrome/browser/chrome_notification_types.h"
+@@ -346,7 +348,7 @@ ExtensionService::ExtensionService(Profile* profile,
+   }
+ 
+   component_loader_.reset(
+-      new extensions::ComponentLoader(this,
++      new extensions::BraveComponentLoader(this,
+                                       profile->GetPrefs(),
+                                       g_browser_process->local_state(),
+                                       profile));
+@@ -1258,6 +1260,23 @@ void ExtensionService::AddComponentExtension(const Extension* extension) {
+   }
+ 
+   AddExtension(extension);
++#if defined(BRAVE_CHROMIUM_BUILD)
++  // ContentSettingsStore::RegisterExtension is only called for default components
++  // on the first run with a fresh profile. All restarts of the browser after that do not call it.
++  // This causes ContentSettingsStore's `entries_` to never insert the component ID
++  // and then  ContentSettingsStore::GetValueMap always returns nullptr.
++  // I don't think Chromium is affeced by this simply because they don't use content settings
++  // from default component extensions.
++  extension_prefs_->OnExtensionInstalled(extension, Extension::ENABLED,
++                                         syncer::StringOrdinal(),
++                                         extensions::kInstallFlagNone,
++                                         std::string(),
++                                         base::nullopt);
++  // Trigger ContentSettingsService::OnExtensionPrefsLoaded to populate pref
++  // values into content setting store.
++  static_cast<extensions::BraveExtensionPrefs*>(extension_prefs_)
++    ->NotifyExtensionPrefsLoaded(extension->id());
++#endif
+ }
+ 
+ void ExtensionService::CheckPermissionsIncrease(const Extension* extension,

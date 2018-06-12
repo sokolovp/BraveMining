@@ -1,0 +1,39 @@
+import("//build/toolchain/toolchain.gni")
+import("//build/util/branding.gni")
+
+declare_args() {
+  brave_product_name = ""
+  brave_project_name = ""
+  executable_name = ""
+  brave_version_major = ""
+  brave_version_minor = ""
+  brave_version_build = ""
+  brave_version_patch = 0
+}
+
+brave_version = "$brave_version_major.$brave_version_minor.$brave_version_build"
+
+if (executable_name == "") {
+  executable_name = brave_project_name
+}
+
+brave_dist_dir = "$root_out_dir/dist"
+brave_exe = executable_name
+if (is_win) {
+  brave_exe = "$brave_exe.exe"
+} else if (is_mac) {
+  brave_exe = "$chrome_product_full_name.app"
+}
+
+brave_icon_dir = "nightly"
+if (is_component_build) {
+  brave_icon_dir = "dev"
+}
+
+brave_platform = "darwin"
+if (is_win) {
+  brave_platform = "win32"
+} else if (is_linux) {
+  brave_platform = "linux"
+}
+

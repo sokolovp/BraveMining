@@ -1,0 +1,31 @@
+{
+  "name": "brave-core",
+  "version": "1.0.0",
+  "description": "Brave Core is a set of changes, APIs, and scripts used for customizing Chromium to make Brave.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-js": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brave/brave-core.git"
+  },
+  "author": {
+    "name": "Brave Software <support+laptop@brave.com>"
+  },
+  "contributors": [
+    {
+      "name": "Brian R. Bondy",
+      "email": "brian@brave.com"
+    }
+  ],
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/brave/brave-browser/issues"
+  },
+  "homepage": "https:/github.com/brave/brave-core#readme",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}

@@ -1,0 +1,21 @@
+diff --git a/chrome/browser/browser_process_impl.cc b/chrome/browser/browser_process_impl.cc
+index b2fd6d39c9c125f7ed242ca8cb85a93670a139c0..db8b9a60f25f9c70ee706ba44d997c2385e183f8 100644
+--- a/chrome/browser/browser_process_impl.cc
++++ b/chrome/browser/browser_process_impl.cc
+@@ -34,6 +34,7 @@
+ #include "base/time/default_clock.h"
+ #include "base/time/default_tick_clock.h"
+ #include "base/trace_event/trace_event.h"
++#include "brave/components/brave_shields/browser/brave_resource_dispatcher_host_delegate.h"
+ #include "build/build_config.h"
+ #include "chrome/browser/chrome_browser_main.h"
+ #include "chrome/browser/chrome_child_process_watcher.h"
+@@ -1011,7 +1012,7 @@ BrowserProcessImpl::supervised_user_whitelist_installer() {
+ 
+ void BrowserProcessImpl::ResourceDispatcherHostCreated() {
+   resource_dispatcher_host_delegate_ =
+-      std::make_unique<ChromeResourceDispatcherHostDelegate>();
++      std::make_unique<BraveResourceDispatcherHostDelegate>();
+   ResourceDispatcherHost::Get()->SetDelegate(
+       resource_dispatcher_host_delegate_.get());
+ 

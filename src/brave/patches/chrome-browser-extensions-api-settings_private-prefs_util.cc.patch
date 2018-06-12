@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/extensions/api/settings_private/prefs_util.cc b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+index ea8c4d194129c004db5c24d405abc25426bb9ca6..9464d675ba4c7d97499dca5bb6c159971822d7f1 100644
+--- a/chrome/browser/extensions/api/settings_private/prefs_util.cc
++++ b/chrome/browser/extensions/api/settings_private/prefs_util.cc
+@@ -438,6 +438,8 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
+       settings_api::PrefType::PREF_TYPE_BOOLEAN;
+   (*s_whitelist)[::prefs::kImportDialogSearchEngine] =
+       settings_api::PrefType::PREF_TYPE_BOOLEAN;
++  (*s_whitelist)[::prefs::kImportDialogCookies] =
++      settings_api::PrefType::PREF_TYPE_BOOLEAN;
+ #endif
+ 
+   // Proxy settings.

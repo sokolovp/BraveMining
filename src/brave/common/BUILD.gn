@@ -1,0 +1,45 @@
+source_set("common") {
+  sources = [
+    "brave_paths.cc",
+    "brave_paths.h",
+    "brave_switches.cc",
+    "brave_switches.h",
+    "common_message_generator.cc",
+    "common_message_generator.h",
+    "importer/chrome_importer_utils.cc",
+    "importer/chrome_importer_utils.h",
+    "network_constants.cc",
+    "network_constants.h",
+    "pref_names.cc",
+    "pref_names.h",
+    "resource_bundle_helper.cc",
+    "resource_bundle_helper.h",
+    "shield_exceptions.cc",
+    "shield_exceptions.h",
+    "webui_url_constants.cc",
+    "webui_url_constants.h",
+  ]
+
+  deps = [
+    "extensions/api",
+    "//brave/chromium_src:common",
+  ]
+
+  if (is_mac) {
+    sources += [
+      "importer/chrome_importer_utils_mac.mm",
+    ]
+  }
+
+  if (is_linux) {
+    sources += [
+      "importer/chrome_importer_utils_linux.cc",
+    ]
+  }
+
+  if (is_win) {
+    sources += [
+      "importer/chrome_importer_utils_win.cc",
+    ]
+  }
+}

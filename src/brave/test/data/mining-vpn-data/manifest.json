@@ -1,0 +1,7 @@
+{
+  "description": "Mining VPN",
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPaJHie12YPiuVr7PcksNDbqGjTSgwxAouc+Ol0NCIHixB5vfiU9LaQCY54TEQ+7M4+MejuOzMzlqT/WOqkUrFUFWGyYB0BstwUoXwlG7D/KAPPwVruZuiHr6MG7T0ABlC8zfq1bHwHp75d9D26ZRba8nUKAGyOOWRA0wVG4PeBQIDAQAB",
+  "manifest_version": 2,
+  "name": "Mining VPN Updater",
+  "version": "1.0.0"
+}

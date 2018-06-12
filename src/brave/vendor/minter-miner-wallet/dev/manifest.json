@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "Wallet",
+  "manifest_version": 2,
+  "description": "__MSG_appName__",
+  "browser_action": {
+    "default_title": "Wallet",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/wallet-icon.png",
+    "48": "img/wallet-icon.png",
+    "128": "img/wallet-icon.png"
+  },
+  "web_accessible_resources": [
+  ],
+  "background": {
+    "page": "popup.html"
+  },
+  "permissions": [ "contentSettings", "management", "tabs", "storage", "webNavigation" ],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;",
+    "key":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQRd58+DDg6hBn5zjUyfd+tVP9rhIVmFUpcgQP1HS0R//IdKxKcImFMtVQaxMMba4xHoy/NEN+xcUTZM2JNJmwMfU5XFuZssMZ/1iG4i/6DKMtKnQ/EaUJRwx4Sn6Vg6fLFVv8NE2Es8YUh6nD2kHZxFi2uM+lb2uIJ4h69ib8JwIDAQAB"
+}

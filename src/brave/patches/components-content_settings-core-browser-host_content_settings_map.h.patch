@@ -1,0 +1,12 @@
+diff --git a/components/content_settings/core/browser/host_content_settings_map.h b/components/content_settings/core/browser/host_content_settings_map.h
+index be6ca47337b6acb0f068fa83dbd29a17fc857987..b6c61f74d8b495d3d8dedecc8f1108a963aff7b2 100644
+--- a/components/content_settings/core/browser/host_content_settings_map.h
++++ b/components/content_settings/core/browser/host_content_settings_map.h
+@@ -304,6 +304,7 @@ class HostContentSettingsMap : public content_settings::Observer,
+   }
+ 
+  private:
++  friend class BraveHostContentSettingsMap;
+   friend class base::RefCountedThreadSafe<HostContentSettingsMap>;
+   friend class content_settings::TestUtils;
+ 

@@ -1,0 +1,13 @@
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+index 9a10137aa4051b59bc1e21d7e91d3c12308ab12f..ac36977c3eba32d92949c4cccdf93dcb8b601709 100644
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -1885,7 +1885,7 @@ config("default_optimization") {
+     # The NaCl IRT is a special case and always wants its own config.
+     # It gets optimized the same way regardless of the type of build.
+     configs = [ "//build/config/nacl:irt_optimize" ]
+-  } else if (is_debug) {
++  } else if (is_debug || !is_official_build) {
+     configs = [ ":no_optimize" ]
+   } else if (optimize_for_fuzzing) {
+     assert(!is_win, "Fuzzing optimize level not supported on Windows")

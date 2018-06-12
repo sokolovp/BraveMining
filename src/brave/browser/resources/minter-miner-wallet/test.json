@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Wallet",
+  "description": "Wallet extension",
+  "version": "1",
+  "icons": {
+    "16": "wallet_icon.png",
+    "48": "wallet_icon.png",
+    "128": "wallet_icon.png"
+  },
+  "permissions": [],
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "minimum_chrome_version": "28"
+}

@@ -1,0 +1,25 @@
+source_set("miner-vpn") {
+  sources = [
+    "mining_vpn_service.cc",
+    "mining_vpn_service.h",
+    "base_miner_vpn_service.cc",
+    "base_miner_vpn_service.h",
+    "mining_vpn_resource_throttle.cc",
+    "mining_vpn_resource_throttle.h",
+    "mining_vpn_util.cc",
+    "mining_vpn_util.h",
+    "mining_vpn_web_contents_observer.cc",
+    "mining_vpn_web_contents_observer.h",
+    "mining_vpn_resource_dispatcher_host_delegate.cc",
+    "mining_vpn_resource_dispatcher_host_delegate.h",
+    "dat_file_util.cc",
+    "dat_file_util.h",
+  ]
+  deps = [
+    "//brave/vendor/ad-block/brave:ad-block",
+  ]
+  public_deps = [
+    "//chrome/common",
+    "//third_party/leveldatabase",
+  ]
+}

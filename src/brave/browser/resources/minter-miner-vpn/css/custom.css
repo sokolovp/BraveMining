@@ -1,0 +1,94 @@
+/**
+ * Chrome Extension Twitter Bootstrap 3 Template
+ * Custom CSS
+ *	
+ */
+
+html {
+    font-size: 10px;
+}
+
+body, section {			/* Change width and height to own preferences */
+	width: 250px;
+	height: 450px;
+	overflow-x: hidden;
+}
+
+
+/* Basic style tweaks */
+section { padding: 5px;}
+.navbar { margin-bottom: 2px; }
+
+
+/* Scroll Bar */
+::-webkit-scrollbar { width: 7px; border-radius: 4px; }
+::-webkit-scrollbar-track { background: white; border-radius: 4px; }
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:window-inactive
+{ background: #e1e8ee; border-radius: 4px;}
+
+
+/* custom styles */
+
+.container {
+    padding: 0;
+    width: 100%
+}
+
+.flex {
+    display: flex;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+.toggle.ios .toggle-handle { border-radius: 20px; }
+
+.vpn-toggle {
+    font-size: 1.8rem;
+    background: linear-gradient(to right, #305581 , #623d86);
+    height: 60px;
+    padding-top: 15px;
+    border-bottom: 1px solid #5f6695;
+}
+.vpn-toggle > label {
+    margin-right: 7px;
+    color: #fff;
+}
+.current-vpn {
+    background: linear-gradient(to right, #305581 , #623d86);
+    height: 60px;
+    padding: 10px 20px;
+}
+
+.current-vpn-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.current-vpn-location {
+    font-size: 1.3rem;
+    color: #c3c4d4;
+}
+
+.vpn-address-list {
+    height: 330px;
+    overflow-y: scroll;
+}
+.vpm-address-country {
+    border-bottom: 1px solid #e4e4e4;
+    padding: 4px 15px;
+    background: #eef5f9;
+    color: #848b90;
+}
+.vpn-address-item {
+    font-size: 1.4rem;
+    cursor: pointer;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 10px 15px;
+}
+.vpn-address-item:hover {
+    background: #97bcb8;
+}

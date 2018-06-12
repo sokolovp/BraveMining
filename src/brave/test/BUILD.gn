@@ -1,0 +1,89 @@
+import("//testing/test.gni")
+
+static_library("brave_test_support_unit") {
+  testonly = true
+  sources = [
+    "base/brave_unit_test_suite.cc",
+    "base/brave_unit_test_suite.h",
+    "base/run_all_unittests.cc",
+  ]
+
+  public_deps = [
+    "//chrome/test:test_support",
+    "//base",
+    "//chrome:resources",
+    "//chrome:strings",
+    "//chrome/browser",
+    "//chrome/common",
+    "//mojo/edk/test:test_support",
+  ]
+
+  if (is_win) {
+    deps = [
+      "//chrome/install_static/test:test_support",
+    ]
+  }
+}
+
+test("brave_unit_tests") {
+  sources = [
+    "//brave/browser/net/brave_site_hacks_network_delegate_helper_unittest.cc",
+    "//brave/browser/net/brave_static_redirect_network_delegate_helper_unittest.cc",
+    "//brave/common/importer/brave_mock_importer_bridge.cc",
+    "//brave/common/importer/brave_mock_importer_bridge.h",
+    "//chrome/common/importer/mock_importer_bridge.cc",
+    "//chrome/common/importer/mock_importer_bridge.h",
+    "../utility/importer/chrome_importer_unittest.cc",
+  ]
+
+  data = [
+    "data/",
+  ]
+
+  configs += [
+    "//brave/build/geolocation",
+  ]
+
+  public_deps = [
+    "//base",
+    "//base/test:test_support",
+    "//brave:browser_dependencies",
+    "//brave/browser",
+    "//brave/common",
+    "//brave/components/content_settings/core/browser",
+    "//brave/extensions",
+    "//brave/renderer",
+    "//brave/utility",
+    ":brave_test_support_unit",
+    "//testing/gtest",
+  ]
+}
+
+group("brave_browser_tests_deps") {
+  deps = [
+   "//brave:browser_dependencies",
+   "//brave:child_dependencies",
+   "//brave:brave"
+  ]
+}
+
+test("brave_browser_tests") {
+  sources = [
+    "//brave/components/brave_shields/browser/ad_block_service_browsertest.cc",
+    "//brave/components/brave_shields/browser/https_everywhere_service_browsertest.cc",
+    "//brave/components/brave_shields/browser/tracking_protection_service_browsertest.cc",
+    "//brave/renderer/brave_content_settings_observer_browsertest.cc",
+    "//chrome/browser/extensions/browsertest_util.cc",
+    "//chrome/browser/extensions/browsertest_util.h",
+    "//chrome/browser/extensions/extension_browsertest.cc",
+    "//chrome/browser/extensions/extension_browsertest.h",
+    "//chrome/browser/extensions/updater/extension_cache_fake.cc",
+    "//chrome/browser/extensions/updater/extension_cache_fake.h",
+  ]
+  defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
+  deps = [
+    "//chrome/browser/ui",
+    "//chrome/test:browser_tests_runner",
+    ":brave_browser_tests_deps",
+  ]
+}

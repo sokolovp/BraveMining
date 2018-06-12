@@ -1,0 +1,30 @@
+import("//build/config/features.gni")
+import("//build/config/ui.gni")
+
+source_set("utility") {
+  sources = [
+    "brave_content_utility_client.cc",
+    "brave_content_utility_client.h",
+    "importer/brave_external_process_importer_bridge.cc",
+    "importer/brave_external_process_importer_bridge.h",
+    "importer/chrome_importer.cc",
+    "importer/chrome_importer.h",
+  ]
+
+  public_deps = [
+    "//content/public/common",
+  ]
+
+  defines = [ ]
+
+  deps = [
+    "//chrome/common",
+    "//chrome/utility",
+    "//components/password_manager/core/browser",
+  ]
+
+  if (use_glib) {
+    defines += [ "USE_LIBSECRET" ]
+    deps += [ "//third_party/libsecret" ]
+  }
+}

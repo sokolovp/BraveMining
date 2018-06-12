@@ -1,0 +1,14 @@
+diff --git a/chrome/app/settings_strings.grdp b/chrome/app/settings_strings.grdp
+index b068b4de50bc30aac24d0804c4133abbb033bc8a..974402e79d3372521df104f769932886bc6a0f4b 100644
+--- a/chrome/app/settings_strings.grdp
++++ b/chrome/app/settings_strings.grdp
+@@ -3268,6 +3268,9 @@
+     <message name="IDS_SETTINGS_IMPORT_AUTOFILL_FORM_DATA_CHECKBOX" desc="Checkbox for importing form data for autofill">
+       Autofill form data
+     </message>
++    <message name="IDS_SETTINGS_IMPORT_COOKIES_CHECKBOX" desc="Checkbox for importing cookies">
++      Cookies
++    </message>
+ 
+     <message name="IDS_SETTINGS_IMPORT_CHOOSE_FILE" desc="Text for the Choose File on dialog">
+       Choose File

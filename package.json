@@ -1,0 +1,105 @@
+{
+  "name": "brave",
+  "version": "1.0.0",
+  "description": "Prototype Chromium based browser for Desktop, Android and iOS",
+  "scripts": {
+    "cibuild": "node ./scripts/commands.js cibuild",
+    "init": "node ./scripts/sync.js --init",
+    "create_dist": "node ./scripts/commands.js create_dist",
+    "sync": "node ./scripts/sync.js",
+    "build": "node ./scripts/commands.js build",
+    "versions": "node ./scripts/commands.js versions",
+    "upload": "node ./scripts/commands.js upload",
+    "update_patches": "node ./scripts/commands.js update_patches",
+    "start": "node ./scripts/commands.js start",
+    "push_l10n": "node ./scripts/commands.js push_l10n",
+    "pull_l10n": "node ./scripts/commands.js pull_l10n",
+    "test": "node ./scripts/commands.js test",
+    "web-ui": "webpack --config src/brave/components/webpack/prod.config.js --progress --profile --colors",
+    "web-ui-dev": "webpack --config src/brave/components/webpack/dev.config.js --progress --profile --colors"
+  },
+  "engines": {
+    "node": "^8.9.2",
+    "npm": "^5.5.1"
+  },
+  "config": {
+    "projects": {
+      "chrome": {
+        "dir": "src",
+        "tag": "66.0.3359.117",
+        "repository": {
+          "url": "https://chromium.googlesource.com/chromium/src.git"
+        },
+        "custom_deps": {
+          "src/third_party/WebKit/LayoutTests": "%None%",
+          "src/chrome_frame/tools/test/reference_build/chrome": "%None%",
+          "src/chrome_frame/tools/test/reference_build/chrome_win": "%None%",
+          "src/chrome/tools/test/reference_build/chrome": "%None%",
+          "src/chrome/tools/test/reference_build/chrome_linux": "%None%",
+          "src/chrome/tools/test/reference_build/chrome_mac": "%None%",
+          "src/chrome/tools/test/reference_build/chrome_win": "%None%"
+        }
+      },
+      "brave-core": {
+        "dir": "src/brave",
+        "branch": "master",
+        "repository": {
+          "url": "https://github.com/brave/brave-core.git"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brave/brave-browser.git"
+  },
+  "author": {
+    "name": "Brave Software <support+desktop@brave.com>"
+  },
+  "contributors": [
+    {
+      "name": "Brian Johnson",
+      "email": "bjohnson@brave.com"
+    },
+    {
+      "name": "Brian R. Bondy",
+      "email": "brian@brave.com"
+    }
+  ],
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/brave/brave-browser/issues"
+  },
+  "homepage": "https://github.com/brave/brave-browser#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "css-loader": "^0.28.9",
+    "file-loader": "^1.1.6",
+    "font-awesome": "^4.7.0",
+    "fs-extra": "^1.0.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.4.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-optimize": "^1.0.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "react": "^16.2.0",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "standard": "^10.0.3",
+    "webpack": "^3.10.0"
+  }
+}

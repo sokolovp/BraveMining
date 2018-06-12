@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/ui/libgtkui/gtk_util.cc b/chrome/browser/ui/libgtkui/gtk_util.cc
+index 96f8c0e71472064031e0600b8e447854b8428fd2..c1c220250a7abe9d800cba786336a0413d8aa485 100644
+--- a/chrome/browser/ui/libgtkui/gtk_util.cc
++++ b/chrome/browser/ui/libgtkui/gtk_util.cc
+@@ -129,7 +129,7 @@ std::string GetDesktopName(base::Environment* env) {
+   std::string name;
+   if (env->GetVar("CHROME_DESKTOP", &name) && !name.empty())
+     return name;
+-  return "chromium-browser.desktop";
++  return "brave-browser.desktop";
+ #endif
+ }
+ 

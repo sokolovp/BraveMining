@@ -1,0 +1,39 @@
+diff --git a/third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp b/third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp
+index 2377614708aa4eeac0795d52e33155623e506994..2c95a6d31921c46175b738d2b2a785a1322b2f76 100644
+--- a/third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp
++++ b/third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include <memory>
+ #include "bindings/modules/v8/WebGLAny.h"
++#include "brave/renderer/brave_content_settings_observer_helper.h"
+ #include "core/html/HTMLImageElement.h"
+ #include "core/html/canvas/HTMLCanvasElement.h"
+ #include "core/html/canvas/ImageData.h"
+@@ -4858,6 +4859,8 @@ ScriptValue WebGL2RenderingContextBase::getParameter(ScriptState* script_state,
+                                                      GLenum pname) {
+   if (isContextLost())
+     return ScriptValue::CreateNull(script_state);
++  if (canvas() && !AllowFingerprinting(canvas()->GetDocument().GetFrame()))
++    return ScriptValue::CreateNull(script_state);
+   switch (pname) {
+     case GL_SHADING_LANGUAGE_VERSION: {
+       return WebGLAny(
+@@ -5435,6 +5438,8 @@ ScriptValue WebGL2RenderingContextBase::getFramebufferAttachmentParameter(
+   if (isContextLost() || !ValidateGetFramebufferAttachmentParameterFunc(
+                              kFunctionName, target, attachment))
+     return ScriptValue::CreateNull(script_state);
++  if (canvas() && !AllowFingerprinting(canvas()->GetDocument().GetFrame()))
++    return ScriptValue::CreateNull(script_state);
+ 
+   WebGLFramebuffer* framebuffer_binding = GetFramebufferBinding(target);
+   DCHECK(!framebuffer_binding || framebuffer_binding->Object());
+@@ -5644,6 +5649,8 @@ ScriptValue WebGL2RenderingContextBase::getTexParameter(
+     GLenum pname) {
+   if (isContextLost() || !ValidateTextureBinding("getTexParameter", target))
+     return ScriptValue::CreateNull(script_state);
++  if (canvas() && !AllowFingerprinting(canvas()->GetDocument().GetFrame()))
++    return ScriptValue::CreateNull(script_state);
+ 
+   switch (pname) {
+     case GL_TEXTURE_WRAP_R:

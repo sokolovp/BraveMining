@@ -1,0 +1,54 @@
+import("//build/config/features.gni")
+
+source_set("browser_process") {
+  sources = [
+    "brave_browser_main_extra_parts.cc",
+    "brave_browser_main_extra_parts.h",
+    "brave_browser_process_impl.cc",
+    "brave_browser_process_impl.h",
+    "brave_tab_helpers.cc",
+    "brave_tab_helpers.h",
+    "brave_profile_prefs.cc",
+    "brave_profile_prefs.h",
+    "component_updater/brave_component_installer.cc",
+    "component_updater/brave_component_installer.h",
+    "component_updater/brave_component_updater_configurator.cc",
+    "component_updater/brave_component_updater_configurator.h",
+    "importer/brave_external_process_importer_client.cc",
+    "importer/brave_external_process_importer_client.h",
+    "importer/brave_external_process_importer_host.cc",
+    "importer/brave_external_process_importer_host.h",
+    "importer/brave_in_process_importer_bridge.cc",
+    "importer/brave_in_process_importer_bridge.h",
+    "importer/brave_profile_writer.cc",
+    "importer/brave_profile_writer.h"
+  ]
+
+  deps = [
+    "//components/component_updater",
+    "//content/public/browser",
+    "//brave/chromium_src:browser",
+  ]
+}
+
+source_set("browser") {
+  sources = [
+    "brave_content_browser_client.cc",
+    "brave_content_browser_client.h",
+  ]
+
+  public_deps = [
+    "//brave/components/resources:brave_components_resources_grit",
+    "//brave/browser/resources:brave_extension_grit",
+    "//chrome/browser",
+  ]
+
+  deps = [
+    "//brave/components/brave_shields/browser:brave_shields",
+    "//brave/components/minter_miner_vpn/browser:miner-vpn",
+    "//brave/components/omnibox/browser:brave_autocomplete",
+    "extensions",
+    "net",
+    "ui",
+  ]
+}

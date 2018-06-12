@@ -1,0 +1,111 @@
+/**
+ * Chrome Extension Twitter Bootstrap 3 Template
+ * Custom CSS
+ *	
+ */
+html {
+    font-size: 10px;
+}
+
+body, section {			/* Change width and height to own preferences */
+	width: 300px;
+	height: 245px;
+	overflow-x: hidden;
+}
+
+/* Basic style tweaks */
+section { padding: 5px;}
+.navbar { margin-bottom: 2px; }
+
+input::placeholder {
+    color: #c9d2d7;
+    padding-left: 15px;
+}
+/* Scroll Bar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); }
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:window-inactive  { background: red; }
+
+.flex {
+    display: flex;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+.space-around {
+    justify-content: space-around;
+}
+.align-center {
+    text-align: center;
+}
+.flex-center {
+    justify-content: center;
+}
+
+/* custom styles */
+
+.container {
+    width: 100%;
+    padding: 0;
+}
+
+.full-size {
+    width: 100%;
+}
+
+.wallet-popup__header {
+    background: linear-gradient(to right, #305581 , #623d86);
+    margin-top: -20px;
+    height: 80px;
+    padding: 10px;
+}
+
+.wallet-popup__title {
+    color: #fdfdfe;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.wallet-popup_address {
+    color: #dfe0e8;
+    font-size: 1rem;
+}
+.wallet-info {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eef2f5;
+}
+.wallet-params {
+    color: #bcbcbc;
+    font-size: 1.4rem;
+}
+.wallet-value {
+    font-weight: 700;
+    color: #333333;
+    font-size: 1.5rem;
+    align-self: center;
+}
+/*.params-group > div {*/
+    /*margin-top: 10px;*/
+/*}*/
+.wallet-buttons {
+    background: #3bb2b8;
+    color: #fdfefe;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    padding: 0 25px;
+    height: 35px;
+}
+.button-group {
+    height: 93px;
+    margin-top: 0;
+    background: #eef5f9;
+    padding: 21px 12px;
+
+}
+
+
+
+

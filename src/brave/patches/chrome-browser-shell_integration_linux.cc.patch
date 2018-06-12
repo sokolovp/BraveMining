@@ -1,0 +1,22 @@
+diff --git a/chrome/browser/shell_integration_linux.cc b/chrome/browser/shell_integration_linux.cc
+index 610cba30511257a3db4d8970d1e8bc64f811693a..d64e0bbca7d38f1d7903914eb063a42dab83b79c 100644
+--- a/chrome/browser/shell_integration_linux.cc
++++ b/chrome/browser/shell_integration_linux.cc
+@@ -652,7 +652,7 @@ std::string GetDesktopName(base::Environment* env) {
+   std::string name;
+   if (env->GetVar("CHROME_DESKTOP", &name) && !name.empty())
+     return name;
+-  return "chromium-browser.desktop";
++  return "brave-browser.desktop";
+ #endif
+ }
+ 
+@@ -660,7 +660,7 @@ std::string GetIconName() {
+ #if defined(GOOGLE_CHROME_BUILD)
+   return "google-chrome";
+ #else  // CHROMIUM_BUILD
+-  return "chromium-browser";
++  return "brave-browser";
+ #endif
+ }
+ 

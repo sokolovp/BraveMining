@@ -1,0 +1,44 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+[
+  {
+    "namespace": "MiningVPN",
+    "description": "Use the <code>chrome.MiningVPN</code> API to receive notifications about the status of brave shields.",
+    "compiler_options": {
+      "implemented_in": "brave/browser/extensions/api/mining_vpn_api.h"
+    },
+    "events": [
+      {
+        "name": "onBlocked",
+        "type": "function",
+        "description": "Fired when an ad or tracker is blocked.",
+        "parameters": [
+          {
+            "type": "object",
+            "name": "details",
+            "properties": {
+              "tabId": {"type": "integer", "description": "The ID of the tab in which the action occurs."},
+              "blockType": {"type": "string", "description": "\"adBlock\" or \"trackingProtection\"."},
+              "subresource": {"type": "string", "description": "The URL of the subresource in question."}
+            }
+          }
+        ]
+      }
+    ],
+   "functions": [
+     {
+       "name": "dummy",
+       "type": "function",
+       "description": "Remove me when there were actual fucntions implemented",
+       "properties": [
+         {
+         "type": "integer",
+         "name": "dummyArg"
+         }
+       ]
+     }
+   ]
+  }
+]

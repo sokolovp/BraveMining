@@ -1,0 +1,353 @@
+import("//tools/grit/repack.gni")
+import("//build/config/zip.gni")
+import("//brave/build/config.gni")
+import("//ui/base/ui_features.gni")
+import("//third_party/icu/config.gni")
+import("//build/config/locales.gni")
+import("//media/cdm/library_cdm/cdm_paths.gni")
+
+group("child_dependencies") {
+  public_deps = [
+    "//brave/renderer",
+    "//brave/utility",
+    "common"
+  ]
+}
+
+group("browser_dependencies") {
+  public_deps = [
+    "//brave/browser",
+    "//brave/components/content_settings/core/browser",
+    "//brave/extensions",
+    "common",
+    ":brave_framework_resources",
+    "chromium_src:browser",
+  ]
+}
+
+group("brave") {
+  public_deps = [
+    "//chrome",
+  ]
+  if (is_win) {
+    deps = [
+      "build/win:copy_exe",
+      "build/win:copy_pdb"
+    ]
+  }
+}
+
+group("brave_tests") {
+  testonly = true
+
+  deps = [
+    "test:brave_unit_tests",
+    "test:brave_browser_tests",
+  ]
+}
+
+repack("packed_extra_resources") {
+  sources = [
+    "$root_gen_dir/brave/generated_resources.pak",
+    "$root_gen_dir/components/brave_components_resources.pak",
+    "$target_gen_dir/browser/resources/brave_extension.pak",
+  ]
+
+  deps = [
+    "//brave/app:generated_resources_grit",
+    "//brave/components/resources:brave_components_resources_grit",
+    "//brave/browser/resources:brave_extension_grit",
+    "//brave/common/extensions/api"
+  ]
+
+  if (is_mac) {
+    output = "$root_gen_dir/repack/brave_resources.pak"
+  } else {
+    output = "$root_out_dir/brave_resources.pak"
+  }
+}
+
+group("packed_resources") {
+  public_deps = [
+    ":packed_extra_resources",
+  ]
+}
+
+brave_framework_public_deps = [
+  ":packed_resources",
+]
+
+if (is_mac) {
+  bundle_data("brave_framework_resources") {
+    sources = [
+      "$root_gen_dir/repack/brave_resources.pak",
+    ]
+    public_deps = brave_framework_public_deps
+
+    outputs = [
+      "{{bundle_resources_dir}}/{{source_file_part}}",
+    ]
+  }
+} else {
+  group("brave_framework_resources") {
+    public_deps = brave_framework_public_deps
+  }
+}
+
+group("create_dist") {
+  deps = [
+    ":create_dist_zips"
+  ]
+  if (is_win) {
+    deps += [
+      "//chrome/installer/mini_installer",
+      "build/win:create_signed_installer"
+    ]
+  }
+  if (is_mac) {
+    deps += [ "build/mac:create_dist_mac" ]
+  }
+  if (is_linux) {
+    deps += [
+      "//chrome/installer/linux",
+      "//brave/app/linux:dist_resources",
+    ]
+  }
+}
+
+action("generate_version") {
+  script = "//brave/script/version.py"
+
+  outputs = [
+    "$root_out_dir/version"
+  ]
+}
+
+copy("brave_dist_resources") {
+  if (is_mac) {
+    sources = []
+  } else {
+    sources = [
+      "$root_out_dir/brave_resources.pak",
+      "$root_out_dir/$brave_exe"
+    ]
+  }
+
+  sources += get_target_outputs(":generate_version")
+
+  deps = [
+    ":brave",
+    ":generate_version",
+    ":packed_extra_resources",
+  ]
+
+  if (is_win) {
+    deps += [
+      "//brave/build/win:copy_exe"
+    ]
+  }
+
+  outputs = [
+    "$brave_dist_dir/{{source_file_part}}"
+  ]
+}
+
+if (!is_mac) {
+  copy("brave_locale_dist_resources") {
+    deps = [
+      "//chrome:packed_resources",
+    ]
+
+    sources = []
+    foreach(locale, locales) {
+      # print (locale)
+      if (is_mac) {
+        sources += [ "$root_gen_dir/repack/locales/$locale.pak" ]
+      } else {
+        sources += [ "$root_out_dir/locales/$locale.pak" ]
+      }
+    }
+    outputs = [
+      "$brave_dist_dir/locales/{{source_file_part}}",
+    ]
+  }
+}
+
+if (target_cpu == "x86") {
+  target_arch = "ia32"
+} else {
+  target_arch = target_cpu
+}
+
+chromedriver = "chromedriver"
+if (is_win) {
+  chromedriver = "$chromedriver.exe"
+}
+
+chromedriver_version = "2.33"
+
+copy("brave_chromedriver_dist_resources") {
+  sources = [
+    "$root_out_dir/$chromedriver",
+  ]
+
+  outputs = [
+    "$brave_dist_dir/$chromedriver"
+  ]
+
+  deps = [ "//chrome/test/chromedriver:chromedriver" ]
+}
+
+
+action("generate_chromium_licenses") {
+  license_file = "$root_gen_dir/LICENSES.chromium.html"
+
+  script = "//tools/licenses.py"
+
+  inputs = [
+    rebase_path("//brave/resources/about_credits.tmpl"),
+    rebase_path("//brave/resources/about_credits_entry.tmpl"),
+  ]
+
+  outputs = [
+    license_file
+  ]
+
+  args = [
+    "--target-os=$target_os",
+    "credits",
+    rebase_path(license_file, root_build_dir),
+  ]
+}
+
+copy("brave_license_dist_resources") {
+  sources = get_target_outputs(":generate_chromium_licenses")
+  sources += [
+    "//brave/LICENSE",
+  ]
+  deps = [
+    ":generate_chromium_licenses",
+  ]
+
+  outputs = [
+    "$brave_dist_dir/{{source_file_part}}"
+  ]
+}
+
+zip("chromedriver_zip") {
+  inputs = get_target_outputs(":brave_chromedriver_dist_resources")
+  inputs += get_target_outputs(":brave_license_dist_resources")
+  output = "$brave_dist_dir/chromedriver-v$chromedriver_version-$brave_platform-$target_arch.zip"
+
+  base_dir = brave_dist_dir
+
+  deps = [
+    "app/$current_os:chromedriver_dist_resources",
+    ":brave_chromedriver_dist_resources",
+    ":brave_license_dist_resources",
+  ]
+}
+
+
+action("create_symbols_dist") {
+  output = "$brave_dist_dir/$brave_project_name-v$brave_version-$brave_platform-$target_arch-symbols.zip"
+
+  script = "//brave/script/create-dist.py"
+
+  # inputs = get_target_outputs(":brave_chromedriver_dist_resources")
+  inputs = get_target_outputs(":brave_license_dist_resources")
+  dir_inputs = [ "$brave_project_name.breakpad.syms" ]
+
+  file_inputs = []
+  foreach(input, inputs) {
+    file_inputs += [ rebase_path(input, brave_dist_dir) ]
+  }
+
+  rebase_output = rebase_path(output)
+  rebase_base_dir = rebase_path(brave_dist_dir)
+
+  args = [
+    "--base-dir=$rebase_base_dir",
+    "--inputs=$file_inputs",
+    "--dir-inputs=$dir_inputs",
+    "--output=$rebase_output",
+  ]
+
+  outputs = [ output ]
+
+  deps = [
+    "app/$current_os:symbol_dist_resources",
+    ":brave_license_dist_resources",
+  ]
+}
+
+action("create_dist_zips") {
+  output = "$brave_dist_dir/$brave_project_name-v$brave_version-$brave_platform-$target_arch.zip"
+
+  script = "//brave/script/create-dist.py"
+
+  inputs = get_target_outputs(":brave_license_dist_resources")
+
+  if (!is_mac) {
+    inputs += get_target_outputs(":brave_dist_resources")
+    inputs += get_target_outputs(":brave_locale_dist_resources")
+  }
+
+  if (is_win) {
+    inputs += [
+      "$brave_dist_dir/chrome_elf.dll",
+      "$brave_dist_dir/$widevine_cdm_path/widevinecdmadapter.dll",
+    ]
+  }
+
+  dist_dir = brave_dist_dir
+
+  file_inputs = []
+  foreach(input, inputs) {
+    file_inputs += [ rebase_path(input, dist_dir) ]
+  }
+
+  dir_inputs = []
+  if (is_mac) {
+    dir_inputs += [
+      "$brave_exe",
+    ]
+  }
+
+  outputs = [
+    output
+  ]
+
+  deps = [
+    ":create_symbols_dist",
+    ":brave_license_dist_resources",
+    "app/$current_os:dist_resources",
+  ]
+
+  deps += [ ":chromedriver_zip" ]
+
+  if (!is_mac) {
+    deps += [
+      ":brave_dist_resources",
+      ":brave_locale_dist_resources",
+    ]
+  }
+  if (is_win) {
+    deps += [
+      "app/win:dist_widevine_resources",
+    ]
+  }
+
+  rebase_output = rebase_path(output)
+  if (is_mac) {
+    rebase_base_dir = rebase_path(root_out_dir)
+  } else {
+    rebase_base_dir = rebase_path(dist_dir, root_out_dir)
+  }
+  args = [
+    "--base-dir=$rebase_base_dir",
+    "--inputs=$file_inputs",
+    "--dir-inputs=$dir_inputs",
+    "--output=$rebase_output",
+  ]
+}
